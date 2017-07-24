@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
  * Created by 黄福亮 on 2017/7/17.
  */
 public class BaseController {
+
+
     protected Logger logger = Logger.getLogger(this.getClass());
 
     /**
