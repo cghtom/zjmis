@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zbDataMapper">
+
+    <select id="getZbMsg" parameterType="pd" resultType="pd">
+        SELECT RPT_ID, ZB_ID, ZB_NAME, ZB_DESC, ZB_UNIT, CREATE_DATE, VERSION, STATE FROM MIS_ZB_DEFINE WHERE 1 = 1
+        <if test="ZB_ID != NULL and ZB_ID != ''">
+          AND ZB_ID = ZB_ID
+        </if>
+        <if test="ZB_NAME != NULL and ZB_NAME != ''">
+            AND ZB_NAME = ZB_NAME
+        </if>
+        ORDER BY RPT_ID DESC
+        
+    </select>
+
+    <insert id="addZbMsg" parameterType="pd">
+        INSERT INTO MIS_ZB_DEFINE (RPT_ID, ZB_ID, ZB_NAME, ZB_DESC, ZB_UNIT, CREATE_DATE, VERSION, STATE )
+        VALUES
+        <foreach collection = "list" item = "item" index = "index" separator=",">
+            (#{item.RPT_ID}, #{item.ZB_ID}, #{item.ZB_NAME}, #{item.ZB_DESC}, #{item.ZB_UNIT}, sysdate, #{item.VERSION}, '1')
+        </foreach>
+    </insert>
+    
+    <update id="updZbMsg" parameterType="pd">
+        UPDATE MIS_ZB_DEFINE SET ${sql} WHERE RPT_ID = #{RPT_ID}
+    </update>
+    
+    <select id="ZbMsgTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_ZB_DEFINE
+        <if test="ZB_ID != NULL and ZB_ID != ''">
+            AND ZB_ID = ZB_ID
+        </if>
+        <if test="ZB_NAME != NULL and ZB_NAME != ''">
+            AND ZB_NAME = ZB_NAME
+        </if>
+    </select>
+
+</mapper>

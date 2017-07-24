@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="mis-web:war">
+    <output-path>$PROJECT_DIR$/mis-web/target</output-path>
+    <root id="archive" name="mis-web.war">
+      <element id="artifact" artifact-name="mis-web:war exploded" />
+    </root>
+  </artifact>
+</component>
