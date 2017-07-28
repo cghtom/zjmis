@@ -15,11 +15,19 @@
         
     </select>
 
-    <insert id="addZbMsg" parameterType="pd">
+    <insert id="addZbMsg" parameterType="pd" useGeneratedKeys="false">
         INSERT INTO MIS_ZB_DEFINE (RPT_ID, ZB_ID, ZB_NAME, ZB_DESC, ZB_UNIT, CREATE_DATE, VERSION, STATE )
-        VALUES
-        <foreach collection = "list" item = "item" index = "index" separator=",">
-            (#{item.RPT_ID}, #{item.ZB_ID}, #{item.ZB_NAME}, #{item.ZB_DESC}, #{item.ZB_UNIT}, sysdate, #{item.VERSION}, '1')
+        <foreach collection = "list" item = "item" index = "index" separator="UNION ALL">
+            SELECT
+            #{item.RPT_ID} RPT_ID,
+            #{item.ZB_ID} ZB_ID,
+            #{item.ZB_NAME} ZB_NAME,
+            #{item.ZB_DESC} ZB_DESC,
+            #{item.ZB_UNIT} ZB_UNIT,
+            sysdate CREATE_DATE,
+            #{item.VERSION} VERSION,
+            '1' STATE
+            FROM dual
         </foreach>
     </insert>
     
@@ -28,7 +36,7 @@
     </update>
     
     <select id="ZbMsgTotalCount" parameterType="pd" resultType="pd">
-        SELECT count(*) as COUNT FROM MIS_ZB_DEFINE
+        SELECT count(*) as COUNT FROM MIS_ZB_DEFINE WHERE 1 = 1
         <if test="ZB_ID != NULL and ZB_ID != ''">
             AND ZB_ID = ZB_ID
         </if>

@@ -12,7 +12,27 @@
         FROM "AI_SERVICE_DEF"
         WHERE SERVICE_NAME = #{serviceName}
     </select>
+    
+    <select id="getTableColumeMsg" parameterType="pd" resultType="pd">
+        SELECT
+        "TABLE_NAME",
+        "COLUME_NAME",
+        "COLUME_DESC",
+        "COLUME_ORDER"
+        FROM "AI_TABLE_COLUME"
+        WHERE EXCEL_NAME = #{excelName}
+    </select>
+    
+    <select id="getTableConfigMsg" parameterType="pd" resultType="pd">
+        SELECT
+        dbms_lob.substr(TABLE_CONFIG) as TABLE_CONFIG,
+        MODEL_DATA as MODEL,
+        '123' as txt
+        FROM "AI_TABLE_STYLE"
+        WHERE PAGE_NAME = #{pageName}
+    </select>
 
+    
 
 
 

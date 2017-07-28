@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="rptDataMapper">
+
+    <select id="getRptMsg" parameterType="pd" resultType="pd">
+        SELECT RPT_ID, RPT_NAME, RPT_DESC, CREATE_DATE, MODIFY_DATE, STATE FROM MIS_RPT_DEFINE WHERE 1 = 1
+        <if test="RPT_ID != NULL and RPT_ID != ''">
+          AND RPT_ID = #{RPT_ID}
+        </if>
+        <if test="RPT_NAME != NULL and RPT_NAME != ''">
+            AND RPT_NAME = #{RPT_NAME}
+        </if>
+        ORDER BY RPT_ID DESC
+        
+    </select>
+
+    <insert id="addRptMsg" parameterType="pd" useGeneratedKeys="false">
+        INSERT INTO MIS_RPT_DEFINE (RPT_ID, RPT_NAME, RPT_DESC, CREATE_DATE, STATE )
+        <foreach collection = "list" item = "item" index = "index" separator="UNION ALL">
+            SELECT
+            #{item.RPT_ID} RPT_ID,
+            #{item.RPT_NAME} RPT_NAME,
+            #{item.RPT_DESC} RPT_DESC,
+            sysdate CREATE_DATE,
+            '1' STATE
+            FROM dual
+        </foreach>
+    </insert>
+    
+    <update id="updRptMsg" parameterType="pd">
+            <foreach collection="list" item="item" index="index" separator=";">
+                UPDATE mis_rpt_define SET ${item.sql} WHERE RPT_ID = #{item.RPT_ID}
+            </foreach>
+    </update>
+    
+    <select id="RptMsgTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_RPT_DEFINE WHERE 1 = 1
+        <if test="RPT_ID != NULL and RPT_ID != ''">
+            AND RPT_ID = #{RPT_ID}
+        </if>
+        <if test="RPT_NAME != NULL and RPT_NAME != ''">
+            AND RPT_NAME = #{RPT_NAME}
+        </if>
+    </select>
+
+    <select id="getRptResult" parameterType="pd" resultType="pd">
+        SELECT ID, OP_TIME, RPT_ID, RPT_NAME FROM MIS_RPT_RUN WHERE 1 = 1
+        <if test="OP_TIME != NULL and OP_TIME != ''">
+            AND OP_TIME = #{OP_TIME}
+        </if>
+        <if test="RPT_ID != NULL and RPT_ID != ''">
+            AND RPT_ID = #{RPT_ID}
+        </if>
+        <if test="RPT_NAME != NULL and RPT_NAME != ''">
+            AND RPT_NAME = #{RPT_NAME}
+        </if>
+        ORDER BY ID DESC
+    </select>
+
+    <select id="rptResultMsgTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_RPT_RUN WHERE 1 = 1
+        <if test="OP_TIME != NULL and OP_TIME != ''">
+            AND OP_TIME = #{OP_TIME}
+        </if>
+        <if test="RPT_ID != NULL and RPT_ID != ''">
+            AND RPT_ID = #{RPT_ID}
+        </if>
+        <if test="RPT_NAME != NULL and RPT_NAME != ''">
+            AND RPT_NAME = #{RPT_NAME}
+        </if>
+    </select>
+
+
+</mapper>
