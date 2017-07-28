@@ -1,11 +1,11 @@
 seajs.use(['laytpl','jquery.dataTables.bootstrap','ace-elements.min','ace.min', 'DataTableServerSideData', 'jquery.tableTools', 'jquery.fileupload'], function(laytpl) {
     var httpUrl = 'http://localhost:8080/misweb/dataJson?callBack=misData';
     var httpUploadUrl = 'http://localhost:8080/misweb/upload';
+    var uploadParam = {'serviceName' : 'MISBATCHADDZBMSG'};
     $(function() {
-        'use strict';
         var dataTab = $('#table_report').dataTable({
             "bServerSide" : "true",
-            "pageLength": 2,
+            "pageLength": 10,
             "sAjaxSource" : httpUrl + '&serviceName=MISGETZBMSG',
             "fnServerData": fnDataTablesPipeline,
             "aaSorting": [[1, "desc"]],
@@ -81,26 +81,21 @@ seajs.use(['laytpl','jquery.dataTables.bootstrap','ace-elements.min','ace.min', 
                 }
             },
             "aLengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "全部"]],
-            "aoColumnDefs" : [
-                {"aTargets":[0,5]}
-            ]
+            "aoColumnDefs" : [{"aTargets":[0,5]}]
         });
 
         /** add data start..*/
-
 
         /** upload excel start... */
         $('#fileupload').fileupload({
                 autoUpload: true,
                 url:httpUploadUrl,
+                formData:uploadParam,
                 forceIframeTransport: true,
                 done: function (data) {
                     console.log(data)
                 }}
         );
-            /*$('#fileupload').change(function() {
-                $('#fileupload').fileupload();
-            });*/
          /** upload excel end... */
         var data = [];
         $('#add').on('click',function() {
@@ -117,6 +112,7 @@ seajs.use(['laytpl','jquery.dataTables.bootstrap','ace-elements.min','ace.min', 
             $('#zbModel').modal()
         });
 
+        /** add data start.. */
         $('#commit').on('click', function() {
             var param = $("#form-horizontal").serialize();
             param += "&serviceName=MISADDZBMSG";
@@ -127,6 +123,11 @@ seajs.use(['laytpl','jquery.dataTables.bootstrap','ace-elements.min','ace.min', 
         });
         /** add data end.. */
 
+        /** delete data start... */
+        /*$('#contentBody').on('click', function(){
+            alert("delete");
+        });*/
+        /** delete data end... */
 
 
         $('table th input:checkbox').on('click' , function(){

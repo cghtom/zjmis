@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>指标数据查询</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../plugins/css/bootstrap.min.css" />
+    <link href="../plugins/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../plugins/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="../plugins/css/ace.min.css" />
+    <link rel="stylesheet" href="../plugins/css/ace-responsive.min.css" />
+    <link rel="stylesheet" href="../plugins/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../static/css/table.css" />
+
+</head>
+<body>
+<div class="row-fluid">
+    <div class="table-header">指标数据查询</div>
+    <div class="btn" id ='add'>
+        <i class="icon-pencil"></i>
+        <span>添加</span>
+    </div>
+
+    <!--<div class="btn">
+        <i class="icon-pencil"></i>
+        <span>批量添加</span>
+        <input  class="uploadInp" id="fileupload" name="files" type="file" multiple />
+    </div>
+
+    <button class="btn"><i class="icon-pencil"></i> 删除 </button>
+
+    <button class="btn"><i class="icon-pencil"></i> 导出 </button>-->
+</div>
+
+<table id="table_report" class="table table-bordered table-striped table-hover">
+
+    <tbody id = 'contentBody'>
+
+    </tbody>
+</table>
+
+<div class="modal fade" id="zbModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+                <h4 class="modal-title" id="modalLabel">
+                        <iframe src="zbmanager.html" height="400" width="100%" scrolling="no"></iframe>
+                </h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <div class="btn btn-default" data-dismiss="modal">关闭</div>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+
+</div>
+
+<script id="headTpl" type="text/html">
+    <thead>
+    <tr>
+        <th class="center">
+            <label><input type="checkbox" /><span class="lbl"></span></label>
+        </th>
+        {{# for(var key in d){ }}
+        <th>{{d[key]}}</th>
+        {{# }}}
+        <th>操作</th>
+    </tr>
+    </thead>
+</script>
+
+<script id="modelTpl" type="text/html">
+    {{# for(var i = 0; i < d.length; i++) { }}
+    <div class="control-group">
+        <label class="control-label">{{d[i].cName}}</label>
+        <div class="controls">
+            <input type="text" id="form-field" name = "{{d[i].name}}" placeholder="{{d[i].cName}}">
+        </div>
+    </div>
+    {{# }}}
+</script>
+
+
+<script id="editModelTpl" type="text/html">
+    {{# for(var i = 0; i < d.length; i++) { }}
+    <div class="control-group">
+        <label class="control-label">{{d[i].cName}}</label>
+        <div class="controls">
+            <input type="text" id="form-field-1" name = "{{d[i].name}}" placeholder="{{d[i].cName}}" value="{{d[i].value}}">
+        </div>
+    </div>
+    {{# }}}
+</script>
+
+<script src="../plugins/js/jquery-3.2.1.min.js"></script>
+<script src="../plugins/js/bootstrap.min.js"></script>
+<script src="../plugins/js/jquery.dataTables.min.js"></script>
+<script src="../plugins/js/vendor/jquery.ui.widget.js"></script>
+<script src="../plugins/js/jquery.iframe-transport.js"></script>
+<script src="../plugins/js/cors/jquery.xdr-transport.js"></script>
+<script src="../plugins/js/sea.js"></script>
+<script>
+    var httpUrl = 'http://localhost:8080/misweb/dataJson?callBack=misData';
+    /*var httpUploadUrl = 'http://localhost:8080/misweb/upload';*/
+    var editModelTitle = '修改报表';
+    var modelTitle = "添加报表";
+    var pageName = "RPT_RES_TAB";
+   /* var addServiceName = "MISADDRPTMSG";  *//** 添加报表*//*
+    var delServiceName = 'MISDELRPTMSG';  *//** 删除报表 *//*
+    var editServiceName = 'MISUPDRPTMSG'; *//** 修改报表 */
+</script>
+<script src="../static/js/table.js"></script>
+<script src="../static/js/formData.js"></script>
+
+</body>
+</html>

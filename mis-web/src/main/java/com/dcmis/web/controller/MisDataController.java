@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -60,6 +61,7 @@ public class MisDataController{
     @ResponseBody
     public String uploadDataJson(MultipartFile files,
                                      HttpServletRequest request,HttpServletResponse response) throws Exception {
+        Map properties = request.getParameterMap();
         String curFile = sysConstant.getLocPath()+files.getOriginalFilename();
         String remoteFile = sysConstant.getPath()+files.getOriginalFilename();
         File f=new File(curFile);
@@ -70,6 +72,10 @@ public class MisDataController{
             e.printStackTrace();
         }
         ftpUtil.put(curFile, remoteFile);
-        return "fileuploaddone";
+        f.delete();
+        properties.put("REMOTEFILE", remoteFile);
+        properties.put("FILENAME", files.getOriginalFilename());
+        String backDate = httpService.doPost("http://localhost:8080/mis/mis/data", properties);
+        return "sucess";
     }
 }

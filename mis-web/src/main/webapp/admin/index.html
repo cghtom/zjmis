@@ -1,15 +1,92 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="zh-CH">
+<head>
     <meta charset="UTF-8">
-    <title>指标集管理</title>
-    <link rel="stylesheet" href="/plugins/css/bootstrap.min.css?v1">
-    <link rel="stylesheet" href="/plugins/css/bootstrap-theme.min.css?v1">
+    <title>首页</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <link rel="stylesheet" href="css/jquery.datetimepicker.css">
 </head>
 <body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-img"><img src="img/logo1.png" alt=""></div>
+            </div>
+            <h1 class="header-title">MIS综合统计报表</h1>
+            <div class="header-in">
+                <p class="user"><span class="user-name">jacker</span>,欢迎您登陆</p>
+                <p class="exit"><i class="iconfont icon-xiaoxi"></i>消息</p>
+                <p class="exit"><i class="iconfont icon-tuichu"></i>退出</p>
+            </div>
+        </div>
+        <div class="movable">
+            <div class="fixed-nav">
+                <div class="nav">
+                    <div>
+                        <a href="javascript:void(0);">
+                        <img class="imgIcon" src="img/模型简介.png" alt="">
+                        <p>指标数据管理</p></a>
+                        <ul class="second-nav">
+                            <li>
+                                <i class="iconfont icon-iconfonti"></i>
+                                <a href="javascript:void(0);" data-href="indexDataQuery.html" class="js-Trigger">报表配置管理</a>
+                            </li>
 
+                            <li>
+                                <i class="iconfont icon-iconfonti"></i>
+                                <a href="javascript:void(0);" data-href="indexDataQuery.html" class="js-Trigger">指标配置管理</a>
+                            </li>
 
-<script src="/plugins/js/sea.js?v1"></script>
+                            <li>
+                                <i class="iconfont icon-iconfonti"></i>
+                                <a href="javascript:void(0);" data-href="indexDataQuery.html" class="js-Trigger">指标数据查询</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);">
+                            <img class="imgIcon" src="img/挖掘任务.png" alt="">
+                            <p>指标数据稽核</p>
+                        </a>
+                        <ul class="second-nav">
+                            <li><i class="iconfont icon-iconfonti"></i><a href="javascript:void(0);" data-href="checkDataQuery.html">稽核数据查询</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <a href="javascript:void(0);">
+                            <img class="imgIcon" src="img/结果查询.png" alt="">
+                            <p>数据接口管理</p>
+                        </a>
+                        <ul class="second-nav">
+                            <li><i class="iconfont icon-iconfonti"></i><a href="javascript:void(0);" data-href="interface-manage.html">接口上传管理</a></li>
+                             <li><i class="iconfont icon-iconfonti"></i><a href="javascript:void(0);" data-href="interface-upload.html">接口上传监控</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab tab-slide js-page-tab">
+                <ul class="tab-header">
+                    
+                </ul>
+                <div class="tab-con">
+                    <iframe id="ifr" src="zbmanager.html" height="100%" width="100%" scrolling="auto">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../plugins/js/sea.js"></script>
 
+    <script>
+        seajs.use(['jquery-3.2.1.min'], function() {
+            $('ul.second-nav > li > a').on('click', function(){
+                var $this = $(this);
+                var url = $this.attr('data-href');
+                $('#ifr').attr('src', url);
+            });
+        });
+    </script>
 </body>
 </html>

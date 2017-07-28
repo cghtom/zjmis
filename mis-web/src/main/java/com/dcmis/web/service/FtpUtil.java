@@ -24,7 +24,7 @@ public class FtpUtil {
 
     private FileTransferClient conn;
 
-    public FtpUtil() {
+    public void initFtp() {
         conn = new FileTransferClient();
         try {
             conn.setRemoteHost("20.26.26.45");
@@ -39,6 +39,7 @@ public class FtpUtil {
     }
 
     public void put(String localFilePath, String remoteFilePath) throws Exception{
+        initFtp();
         conn.connect();
         logger.debug(localFilePath + " " + remoteFilePath);
         conn.uploadFile(localFilePath, remoteFilePath);

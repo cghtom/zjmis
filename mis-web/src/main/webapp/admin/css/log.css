@@ -1,0 +1,42 @@
+*{
+    box-sizing: border-box;
+}
+.main{
+    padding-top: 30px;
+    padding-left: 50px;
+    width: 700px;
+}
+.main >div{
+    padding-top: 20px;
+    height: 120px;
+    text-align: center;
+    margin-bottom: 10px;
+    float: left;
+}
+.main >div>img{
+    width: 50px;
+    height: 50px;
+}
+.main >div +div{
+    margin-left:10px;
+}
+.rectangle{
+    width: 250px;
+    background-color: #0F96EE;   
+}
+.square{
+    width: 120px;
+    background-color: #21B4ED;   
+}
+.square.yellow{
+    background-color: #FF9A01;
+}
+.main p{
+    color: #fff;
+    margin:0;
+    margin-top: 10px;
+    font-size: 16px;
+}
+.another-line{
+    margin-left: 0 !important;
+}

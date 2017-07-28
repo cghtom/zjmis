@@ -37,7 +37,7 @@
 
     <button class="btn">
         <i class="icon-pencil"></i> 导出 </button>
-</div>
+
 
     <table id="table_report" class="table table-bordered table-striped table-hover">
 
@@ -91,6 +91,17 @@
             <label class="control-label">{{d[i].cName}}</label>
             <div class="controls">
                 <input type="text" id="form-field" name = "{{d[i].name}}" placeholder="{{d[i].cName}}">
+            </div>
+        </div>
+        {{# }}}
+    </script>
+
+    <script id="editModelTpl" type="text/html">
+        {{# for(var i = 0; i < d.length; i++) { }}
+        <div class="control-group">
+            <label class="control-label">{{d[i].cName}}</label>
+            <div class="controls">
+                <input type="text" id="form-field-1" name = "{{d[i].name}}" placeholder="{{d[i].cName}}" value="{{d[i].value}}">
             </div>
         </div>
         {{# }}}
