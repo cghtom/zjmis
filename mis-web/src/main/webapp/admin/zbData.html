@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="../plugins/css/bootstrap3.min.css" />
-   <!-- <link href="../plugins/css/bootstrap-responsive.min.css" rel="stylesheet" />-->
+    <!-- <link href="../plugins/css/bootstrap-responsive.min.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="../plugins/css/font-awesome.min.css" />
 
     <link rel="stylesheet" href="../plugins/css/ace.min.css" />
@@ -53,7 +53,7 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <iframe id="zbIfr" src="" height="500" width="100%" scrolling="auto"></iframe>
+                <iframe src="zbData.html" height="500" width="100%" scrolling="auto"></iframe>
             </div>
             <div class="modal-footer">
                 <div class="btn btn-default" data-dismiss="modal">关闭</div>
@@ -110,16 +110,29 @@
 <script src="../plugins/js/sea.js"></script>
 <script>
     var httpUrl = 'http://localhost:8080/misweb/dataJson?callBack=misData';
-    /*var httpUploadUrl = 'http://localhost:8080/misweb/upload';*/
-    var editModelTitle = '修改报表';
-    var modelTitle = "添加报表";
-    var pageName = "RPT_RES_TAB";
-   /* var addServiceName = "MISADDRPTMSG";  *//** 添加报表*//*
-    var delServiceName = 'MISDELRPTMSG';  *//** 删除报表 *//*
-    var editServiceName = 'MISUPDRPTMSG'; *//** 修改报表 */
+    var pageName = "ZB_DATA_TAB";
+    var arr = getArgs();
+    var params = "&OP_TIME=" + arr["OP_TIME"] + "&RPT_ID=" + arr["RPT_ID"];
+    httpUrl += params;
+    console.log(httpUrl);
+    function getArgs() {
+        var args = new Object();
+        var query = location.search.substring(1);
+        var pairs = query.split("&");
+        for (var i = 0; i < pairs.length; i++) {
+            var pos = pairs[i].indexOf('=');
+            if (pos == -1)
+                continue;
+            var argname = pairs[i].substring(0, pos);
+            var value = pairs[i].substring(pos + 1);
+            value = decodeURIComponent(value);
+            args[argname] = value;
+        }
+        return args;
+    }
 </script>
 <script src="../static/js/table.js"></script>
-<script src="../static/js/formData.js"></script>
+<script src="../static/js/zbData.js"></script>
 
 </body>
 </html>
