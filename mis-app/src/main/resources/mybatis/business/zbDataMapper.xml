@@ -44,5 +44,36 @@
             AND ZB_NAME = ZB_NAME
         </if>
     </select>
+    
+    <select id="getRptZbMsg"  parameterType="pd" resultType="pd">
+       select t1.OP_TIME,
+       t1.ZB_ID,
+       t1.ZB_NAME,
+       t2.CITY_ID,
+       t2.ZB_DATA as ZB_DATA_1,
+       t3.ZB_DATA as ZB_DATA_1
+       from MIS_ZB_DEFINE_RUN t1
+       left join MIS_RPT_JTZB_DATA t2
+       on (t1.zb_id = t2.zb_id and t1.OP_TIME = t2.op_time)
+       left join MIS_RPT_JTZB_DATA_TMP t3
+       on (t1.zb_id = t3.zb_id and t1.OP_TIME = t2.op_time)
+       where rpt_id = #{RPT_ID} and t1.OP_TIME = #{OP_TIME}
+        <if test="ZB_ID != NULL and ZB_ID != ''">
+            AND t1.ZB_ID = ZB_ID
+        </if>
+    </select>
+
+    <select id="getRptZbMsgTotalCount"  parameterType="pd" resultType="pd">
+        select count(*)
+        from MIS_ZB_DEFINE_RUN t1
+        left join MIS_RPT_JTZB_DATA t2
+        on (t1.zb_id = t2.zb_id and t1.OP_TIME = t2.op_time)
+        left join MIS_RPT_JTZB_DATA_TMP t3
+        on (t1.zb_id = t3.zb_id and t1.OP_TIME = t2.op_time)
+        where t1.rpt_id = #{RPT_ID} and t1.OP_TIME = #{OP_TIME}
+        <if test="ZB_ID != NULL and ZB_ID != ''">
+            AND t1.ZB_ID = ZB_ID
+        </if>
+    </select>
 
 </mapper>
