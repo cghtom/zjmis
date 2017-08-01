@@ -13,6 +13,7 @@ import java.io.IOException;
 public class BatchAddBusiness {
 
     public void addZBDefine(PageData pd, String databaseId, DaoSupport daoSupport) throws Exception {
+//        System.out.println("GIT TEST");
         String fileName = pd.getString("FILENAME");
         String remoteFile = pd.getString("REMOTEFILE");
         String localFile = "D:/file/" + fileName;
