@@ -64,7 +64,7 @@
     </select>
 
     <select id="getRptZbMsgTotalCount"  parameterType="pd" resultType="pd">
-        select count(*)
+        select count(*) AS COUNT
         from MIS_ZB_DEFINE_RUN t1
         left join MIS_RPT_JTZB_DATA t2
         on (t1.zb_id = t2.zb_id and t1.OP_TIME = t2.op_time)
