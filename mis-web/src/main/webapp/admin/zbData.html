@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../plugins/css/font-awesome.min.css" />
 
     <link rel="stylesheet" href="../plugins/css/ace.min.css" />
+    <link rel="stylesheet" href="../admin/css/style.css" />
     <link rel="stylesheet" href="../plugins/css/ace-responsive.min.css" />
     <link rel="stylesheet" href="../plugins/css/ace-skins.min.css" />
     <link rel="stylesheet" href="../static/css/table.css" />
@@ -34,6 +35,31 @@
     <button class="btn"><i class="icon-pencil"></i> 导出 </button>-->
 </div>
 
+<div class="clearfix form-parent" id="formReportContent">
+    <form class="form-group result-form form-group-line2 clearfix result-qr-form">
+        <div class="form-line">
+            <label for="">数据周期：</label>
+            <input class="form-input checkDataQuery-form-input " id="data-cycle" type="text">
+        </div>
+        <div class="form-line">
+            <label for="">报表名称：</label>
+            <input class="form-input checkDataQuery-form-input " id="report-form-name" type="text">
+        </div>
+        <div class="form-line">
+            <label for="">报表编号：</label>
+            <input class="form-input checkDataQuery-form-input " id="report-form-code" type="text">
+        </div>
+        <div class="form-line">
+            <label for="">稽核状态：</label>
+            <div id="checkDataQuery-form-input"></div>
+        </div>
+    </form>
+    <div class="btn" id ='query-button'>
+        <i class="icon-pencil"></i>
+        <span>查询</span>
+    </div>
+</div>
+
 <table id="table_report" class="table table-bordered table-striped table-hover">
 
     <tbody id = 'contentBody'>
@@ -53,7 +79,7 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <iframe src="zbData.html" height="500" width="100%" scrolling="auto"></iframe>
+                <!--<iframe src="zbData.html" height="500" width="100%" scrolling="auto"></iframe>-->
             </div>
             <div class="modal-footer">
                 <div class="btn btn-default" data-dismiss="modal">关闭</div>
@@ -110,9 +136,10 @@
 <script src="../plugins/js/sea.js"></script>
 <script>
     var httpUrl = 'http://localhost:8080/misweb/dataJson?callBack=misData';
+    var httpUrlQuery = httpUrl;
     var pageName = "ZB_DATA_TAB";
     var arr = getArgs();
-    var params = "&OP_TIME=" + arr["OP_TIME"] + "&RPT_ID=" + arr["RPT_ID"];
+    var params = "&OP_TIME=" + arr.OP_TIME + "&RPT_ID=" + arr.RPT_ID;
     httpUrl += params;
     console.log(httpUrl);
     function getArgs() {
