@@ -11,8 +11,9 @@ seajs.use(['laytpl',
             },
             function(data) {
                 var tableConfig = eval('(' + data.TABLE_CONFIG + ')');
+                console.log(data)
                 var dataModel = eval('(' + data.MODEL + ')');
-                console.log(dataModel);
+                console.log(dataModel+"222");
                 var dataTab = $('#table_report').dataTable(tableConfig);
 
 
@@ -43,6 +44,22 @@ seajs.use(['laytpl',
                         dataTab.fnDraw(false);
                     });
                 });
+
+                /*query data start....*/
+                $('#query-button').on('click',function() {
+                    var serviceName = "MISZBRESULT";
+                    var ZB_ID = $("#report-form-code").val();
+                    var ZB_NAME = $("#report-form-name").val();
+                    var OP_TIME = $("#data-cycle").val();
+                    var STATE = 1;
+                    httpUrl = (httpUrlQuery+"&serviceName="+serviceName+"&ZB_ID="+ZB_ID+"&ZB_NAME="+ZB_NAME+"&OP_TIME="+OP_TIME+"&STATE="+STATE+"&RPT_ID=" + arr.RPT_ID)
+                   console.log(httpUrl);
+                    var oSettings = dataTab.fnSettings();
+                    oSettings.sAjaxSource = httpUrl;//重新设置url
+                    dataTab.fnDraw(false);
+                });
+
+
 
                 /** delete data start... */
                 $('#contentBody').on('click', '.btn_delete', function(){
