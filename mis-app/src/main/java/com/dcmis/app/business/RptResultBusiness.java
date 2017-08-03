@@ -33,4 +33,18 @@ public class RptResultBusiness {
         return reData;
     }
 
+
+    /**
+     * 报表归档 MISFILERPTMSG
+     * @param pd
+     * @param databaseId
+     * @param daoSupport
+     * @throws Exception
+     */
+    public void fileMisRptMsg (PageData pd, String databaseId, DaoSupport daoSupport) throws Exception{
+        Object update = daoSupport.update("zbDataMapper.fileDataByTmp", pd);
+        System.out.println(update+"--------");
+        System.out.println("123");
+    }
+
 }
