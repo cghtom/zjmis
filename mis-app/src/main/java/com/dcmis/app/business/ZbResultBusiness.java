@@ -4,6 +4,7 @@ import com.dcmis.app.dao.DaoSupport;
 import com.dcmis.app.util.PageData;
 import com.github.pagehelper.PageHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,5 +34,18 @@ public class ZbResultBusiness {
         reData.put("iTotalDisplayRecords", pdNum.get("COUNT").toString());
         return reData;
     }
+
+    /**
+     * 指标修改 MISUPDRPTZBMSG
+     * @param pd
+     * @param databaseId
+     * @param daoSupport
+     * @throws Exception
+     */
+    public void updateZBMsg(PageData pd, String databaseId, DaoSupport daoSupport) throws Exception {
+        daoSupport.update("zbDataMapper.updZBMsg", pd);
+    }
+
+
 
 }
