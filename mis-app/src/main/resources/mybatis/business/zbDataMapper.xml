@@ -89,4 +89,20 @@
         </if>
     </select>
 
+    <update id="updZBMsg" parameterType="pd">
+            UPDATE MIS_RPT_JTZB_DATA_TMP SET ZB_DATA = #{ZB_DATA} WHERE OP_TIME = #{OP_TIME} AND ZB_ID = #{ZB_ID}
+    </update>
+
+    <update id="fileDataByTmp" parameterType="pd">
+       update MIS_RPT_JTZB_DATA d set d.ZB_DATA=
+       (select c.ZB_DATA tmp_data from MIS_RPT_JTZB_DATA_TMP c where c.ZB_ID=d.ZB_ID AND c.OP_TIME=d.OP_TIME
+       and d.zb_id in(select
+       zb_id from MIS_ZB_DEFINE_RUN where rpt_id in (#{RPT_ID}))
+       )
+      WHERE  EXISTS (select 1 from MIS_RPT_JTZB_DATA_TMP c where c.ZB_ID=d.ZB_ID AND c.OP_TIME=d.OP_TIME
+      and d.zb_id in(select
+       zb_id from MIS_ZB_DEFINE_RUN where rpt_id in (#{RPT_ID}))
+      )
+    </update>
+
 </mapper>
