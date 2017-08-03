@@ -53,11 +53,50 @@ seajs.use(['laytpl',
                     var OP_TIME = $("#data-cycle").val();
                     var STATE = 1;
                     httpUrl = (httpUrlQuery+"&serviceName="+serviceName+"&ZB_ID="+ZB_ID+"&ZB_NAME="+ZB_NAME+"&OP_TIME="+OP_TIME+"&STATE="+STATE+"&RPT_ID=" + arr.RPT_ID)
-                   console.log(httpUrl);
+                    console.log(httpUrl);
                     var oSettings = dataTab.fnSettings();
                     oSettings.sAjaxSource = httpUrl;//重新设置url
                     dataTab.fnDraw(false);
                 });
+                /*query data end....*/
+
+                /*rpt_edit data start ....*/
+                $('#contentBody').on('click', '#rpt_edit', function(){
+                    var $this = $(this);
+                    var zb_id = $this.attr("data1");
+                    var op_time = $this.attr("data2");
+                    var zb_data = $this.attr("data3");
+                    $('#zb-commit').attr("data1",zb_id);
+                    $('#zb-commit').attr("data2",op_time);
+                    for (var item in dataModel) {
+                        dataModel[item].value = zb_data;
+                    }
+                    var modelTpl = $("#modelTpl").html().replace("lt;", "<");
+                    laytpl(modelTpl).render(dataModel, function (html) {
+                        $('#form-horizontal').html(html);
+                    });
+                    $('#zbModel').modal();
+                });
+                /*rpt_edit data end ....*/
+
+
+                /*zb-edit-sure data start ....*/
+                $('#zb-commit').on('click', function() {
+                    var zb_id = $(this).attr("data1");
+                    var op_time = $(this).attr("data2");
+                    var serviceName = editServiceName;
+                    var param = $("#form-horizontal").serialize();
+                    param += ("&serviceName=" + serviceName+"&ZB_ID="+zb_id+"&OP_TIME="+op_time);
+                    console.log(httpUrlQuery + "&" + param);
+                    $.get(httpUrl + "&" + param, function(data){
+                        $('#zbModel').modal('hide');
+                        dataTab.fnDraw(false);
+                    });
+                });
+
+
+                /*zb-edit-sure data end ....*/
+
 
 
 
