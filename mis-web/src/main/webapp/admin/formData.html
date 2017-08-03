@@ -18,20 +18,15 @@
 <body>
 <div class="row-fluid">
     <div class="table-header">指标数据查询</div>
-    <!--<div class="btn" id ='add'>
-        <i class="icon-pencil"></i>
-        <span>添加</span>
-    </div>
--->
-    <!--<div class="btn">
-        <i class="icon-pencil"></i>
-        <span>批量添加</span>
-        <input  class="uploadInp" id="fileupload" name="files" type="file" multiple />
-    </div>
 
-    <button class="btn"><i class="icon-pencil"></i> 删除 </button>
+</div>
 
-    <button class="btn"><i class="icon-pencil"></i> 导出 </button>-->
+<div class="clearfix form-parent" id="formReportContent">
+
+    <div class="btn" id ='file-button'>
+        <i class="icon-pencil"></i>
+        <span>归档</span>
+    </div>
 </div>
 
 <table id="table_report" class="table table-bordered table-striped table-hover">
@@ -114,6 +109,7 @@
     var editModelTitle = '修改报表';
     var modelTitle = "添加报表";
     var pageName = "RPT_RES_TAB";
+    var fileServiceName = "MISFILERPTMSG"    /*报表归档*/
    /* var addServiceName = "MISADDRPTMSG";  *//** 添加报表*//*
     var delServiceName = 'MISDELRPTMSG';  *//** 删除报表 *//*
     var editServiceName = 'MISUPDRPTMSG'; *//** 修改报表 */
