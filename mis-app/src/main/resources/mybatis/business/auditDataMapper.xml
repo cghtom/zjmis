@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="auditDataMapper">
+
+    <select id="getAuditMsg" parameterType="pd" resultType="pd">
+        SELECT AUDIT_ID, AUDIT_TYPE, AUDIT_FORMULA, RPT_ID, STATE FROM MIS_AUDIT_DEFINE WHERE 1 = 1
+        <if test="AUDIT_ID != NULL and AUDIT_ID != ''">
+            AND AUDIT_ID = #{AUDIT_ID}
+        </if>
+        ORDER BY AUDIT_ID DESC
+
+    </select>
+
+    <insert id="addAuditMsg" parameterType="pd" useGeneratedKeys="false">
+        INSERT INTO MIS_AUDIT_DEFINE (AUDIT_ID, AUDIT_TYPE, AUDIT_FORMULA, RPT_ID, STATE ,CREATE_DATE )
+        <foreach collection = "list" item = "item" index = "index" separator="UNION ALL">
+            SELECT
+            #{item.AUDIT_ID} AUDIT_ID,
+            #{item.AUDIT_TYPE} AUDIT_TYPE,
+            #{item.AUDIT_FORMULA} AUDIT_FORMULA,
+            #{item.RPT_ID} RPT_ID,
+            '1' STATE,
+            sysdate CREATE_DATE
+            FROM dual
+        </foreach>
+    </insert>
+
+    <update id="updAuditMsg" parameterType="pd">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE MIS_AUDIT_DEFINE SET ${item.sql} WHERE AUDIT_ID = #{item.AUDIT_ID}
+        </foreach>
+    </update>
+
+    <select id="auditMsgTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_AUDIT_DEFINE WHERE 1 = 1
+        <if test="AUDIT_ID != NULL and AUDIT_ID != ''">
+            AND AUDIT_ID = #{AUDIT_ID}
+        </if>
+    </select>
+
+
+</mapper>
