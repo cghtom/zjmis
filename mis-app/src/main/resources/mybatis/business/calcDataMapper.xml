@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="calcDataMapper">
+
+    <select id="getCalcMsg" parameterType="pd" resultType="pd">
+        SELECT CALC_ID, CALC_PROC, CALC_NUMERIC, CALC_CONDITION,ZB_ID,CALC_TABLE, STATE FROM MIS_CALC_DEFINE WHERE 1 = 1
+        <if test="CALC_ID != NULL and CALC_ID != ''">
+            AND CALC_ID = #{CALC_ID}
+        </if>
+        ORDER BY CALC_ID DESC
+
+    </select>
+
+    <insert id="addCalcMsg" parameterType="pd" useGeneratedKeys="false">
+        INSERT INTO MIS_CALC_DEFINE (CALC_ID, CALC_PROC, CALC_NUMERIC, CALC_CONDITION,CALC_TABLE,ZB_ID,STATE ,CREATE_DATE )
+        <foreach collection = "list" item = "item" index = "index" separator="UNION ALL">
+            SELECT
+            #{item.CALC_ID} CALC_ID,
+            #{item.CALC_PROC} CALC_PROC,
+            #{item.CALC_NUMERIC} CALC_NUMERIC,
+            #{item.CALC_CONDITION} CALC_CONDITION,
+            #{item.CALC_TABLE} CALC_TABLE,
+            #{item.ZB_ID} ZB_ID,
+            '1' STATE,
+            sysdate CREATE_DATE
+            FROM dual
+        </foreach>
+    </insert>
+
+    <update id="updCalcMsg" parameterType="pd">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE MIS_CALC_DEFINE SET ${item.sql} WHERE CALC_ID = #{item.CALC_ID}
+        </foreach>
+    </update>
+
+    <select id="auditCalcTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_CALC_DEFINE WHERE 1 = 1
+        <if test="CALC_ID != NULL and CALC_ID != ''">
+            AND CALC_ID = #{CALC_ID}
+        </if>
+    </select>
+
+
+</mapper>
