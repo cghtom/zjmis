@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="interfaceDataMapper">
+
+    <select id="getInterfaceMsg" parameterType="pd" resultType="pd">
+        SELECT INTERFACE_CODE, INTERFACE_NAME, UPLOAD_TIME, CREATE_TIME, UPDATE_TIME, STATE FROM MIS_INTERFACE_DEFINE WHERE 1 = 1
+        <if test="INTERFACE_CODE != NULL and INTERFACE_CODE != ''">
+            AND INTERFACE_CODE = #{INTERFACE_CODE}
+        </if>
+        ORDER BY INTERFACE_CODE DESC
+
+    </select>
+
+    <insert id="addInterfaceMsg" parameterType="pd" useGeneratedKeys="false">
+        INSERT INTO MIS_INTERFACE_DEFINE (INTERFACE_CODE, INTERFACE_NAME, UPLOAD_TIME, CREATE_TIME, STATE )
+        <foreach collection = "list" item = "item" index = "index" separator="UNION ALL">
+            SELECT
+            #{item.INTERFACE_CODE} INTERFACE_CODE,
+            #{item.INTERFACE_NAME} INTERFACE_NAME,
+            #{item.UPLOAD_TIME} UPLOAD_TIME,
+            sysdate CREATE_TIME,
+            '1' STATE
+            FROM dual
+        </foreach>
+    </insert>
+
+    <update id="updInterfaceMsg" parameterType="pd">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE MIS_INTERFACE_DEFINE SET ${item.sql} WHERE INTERFACE_CODE = #{item.INTERFACE_CODE}
+        </foreach>
+    </update>
+
+    <select id="interfaceMsgTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_INTERFACE_DEFINE WHERE 1 = 1
+        <if test="INTERFACE_CODE != NULL and INTERFACE_CODE != ''">
+            AND INTERFACE_CODE = #{INTERFACE_CODE}
+        </if>
+        <if test="INTERFACE_NAME != NULL and INTERFACE_NAME != ''">
+            AND INTERFACE_NAME = #{INTERFACE_NAME}
+        </if>
+    </select>
+
+
+</mapper>
