@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="checkDataMapper">
+
+    <select id="getCheckMsg" parameterType="pd" resultType="pd">
+        SELECT OP_TIME, CHECK_FORMULA, RPT_ID, ZB_DATA, CHECK_RESULT, CITY_ID FROM MIS_CHECK_DATA WHERE 1 = 1
+        <if test="OP_TIME != NULL and OP_TIME != ''">
+            AND OP_TIME = #{OP_TIME}
+        </if>
+        <if test="RPT_ID != NULL and RPT_ID != ''">
+            AND RPT_ID = #{RPT_ID}
+        </if>
+        <if test="CITY_ID != NULL and CITY_ID != ''">
+            AND CITY_ID = #{CITY_ID}
+        </if>
+        <if test="CHECK_RESULT != NULL and CHECK_RESULT != ''">
+            AND CHECK_RESULT = #{CHECK_RESULT}
+        </if>
+        ORDER BY RPT_ID DESC
+
+    </select>
+
+    <select id="checkMsgTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_CHECK_DATA WHERE 1 = 1
+        <if test="OP_TIME != NULL and OP_TIME != ''">
+            AND OP_TIME = #{OP_TIME}
+        </if>
+        <if test="RPT_ID != NULL and RPT_ID != ''">
+            AND RPT_ID = #{RPT_ID}
+        </if>
+        <if test="CITY_ID != NULL and CITY_ID != ''">
+            AND CITY_ID = #{CITY_ID}
+        </if>
+        <if test="CHECK_RESULT != NULL and CHECK_RESULT != ''">
+            AND CHECK_RESULT = #{CHECK_RESULT}
+        </if>
+    </select>
+
+    <select id="getZBDataMsgByID" parameterType="pd" resultType="pd">
+        SELECT ZB_DATA FROM MIS_RPT_JTZB_DATA WHERE 1 = 1
+        <if test="ZB_ID != NULL and ZB_ID != ''">
+            AND ZB_ID = #{ZB_ID}
+        </if>
+    </select>
+
+    <update id="updCheckMsg" parameterType="pd">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE MIS_CHECK_DATA SET ${item.sql} WHERE CHECK_FORMULA = #{item.CHECK_FORMULA} and OP_TIME = #{item.OP_TIME}
+        </foreach>
+    </update>
+
+</mapper>
