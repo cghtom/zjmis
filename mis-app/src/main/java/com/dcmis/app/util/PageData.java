@@ -34,7 +34,7 @@ public class PageData extends HashMap implements Map{
 			}else{
 				value = valueObj.toString(); 
 			}
-			returnMap.put(name, value); 
+			returnMap.put(name, value);
 		}
 		map = returnMap;
 	}
