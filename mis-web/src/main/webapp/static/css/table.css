@@ -129,6 +129,47 @@ li [class^="icon-"], .nav li [class^="icon-"], li [class*=" icon-"], .nav li [cl
     line-height: 0;
     content: "";
 }
+
 .row-fluid [class*="span"]:first-child {
     margin-left: 0;
 }
+
+.row{
+    padding: 30px;
+}
+
+.label-table {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 10px;
+    font-weight: 200;
+    width: 300px;
+    padding-right: 30px;
+    text-align: right;
+    vertical-align: inherit;
+    color: rgb(51,51,51);
+    font-size: 30px;
+}
+
+.input-icon{
+    width: 100%;
+}
+
+.form-control{
+    height: 50px;
+}
+
+.btn{
+    background-color: #307ecc!important;
+    border: 5px solid #307ecc;
+    line-height: 40px;
+}
+
+.btn:hover{
+    background-color: #307ecc!important;
+}
+
+
+
+
+
