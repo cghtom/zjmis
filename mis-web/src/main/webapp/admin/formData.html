@@ -22,6 +22,38 @@
 </div>
 
 <div class="clearfix form-parent" id="formReportContent">
+        <form role="form">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="" class="label-table">报表名称：</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                    <span class="input-icon icon-right">
+                        <input class="form-control" id="RPT_NAME" type="text">
+                    </span>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label for="" class="label-table">报表编码：</label>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                    <span class="input-icon icon-right">
+                        <input class="form-control " id="RPT_ID" type="text">
+                    </span>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-2">
+                    <div class="btn" id ='query-button'>
+                        <i class="icon-pencil"></i>
+                        <span>查询</span>
+                    </div>
+                </div>
+            </div>
+
+        </form>
 
     <div class="btn" id ='file-button'>
         <i class="icon-pencil"></i>
@@ -41,14 +73,23 @@
     <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X
                 </button>
-                <h4 class="modal-title" id="modalLabel">
-                    报表页面
-                </h4>
+                <div class="tab-wrap">
+                        <li class="modal-title" id="modalLabel">
+                            报表页面
+                        </li>
+                        <li class="modal-title" id="modalLabelCheck">
+                            稽核页面
+                        </li>
+                </div>
+                <p class="alert-bottom-line"></p>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="rptHTML">
                 <iframe id="zbIfr" src="" height="500" width="100%" scrolling="auto"></iframe>
+            </div>
+            <div class="modal-body" id="checkHTML" style="display:none ">
+                <iframe id="zbCheck" src="" height="500" width="100%" scrolling="auto"></iframe>
             </div>
             <div class="modal-footer">
                 <div class="btn btn-default" data-dismiss="modal">关闭</div>
@@ -105,6 +146,7 @@
 <script src="../plugins/js/sea.js"></script>
 <script>
     var httpUrl = 'http://localhost:8080/misweb/dataJson?callBack=misData';
+    var httpUrlQuery = 'http://localhost:8080/misweb/dataJson?callBack=misData';
     /*var httpUploadUrl = 'http://localhost:8080/misweb/upload';*/
     var editModelTitle = '修改报表';
     var modelTitle = "添加报表";
@@ -114,7 +156,6 @@
     var delServiceName = 'MISDELRPTMSG';  *//** 删除报表 *//*
     var editServiceName = 'MISUPDRPTMSG'; *//** 修改报表 */
 </script>
-<script src="../static/js/table.js"></script>
 <script src="../static/js/formData.js"></script>
 
 </body>
