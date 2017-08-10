@@ -1,8 +1,12 @@
 package com.dcmis.app.util;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DealFormulaUtil {
     public static boolean dealFormulaMap(Map<String, String> formulaMap){
@@ -98,5 +102,35 @@ public class DealFormulaUtil {
         }else {
             return false;
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isContainsCalcChar("("));
+    }
+
+    public static  String  dealRangeFormula(String formula){
+        String sql = "";
+        List<String> lis = new ArrayList<String>();
+        String regex = "\\$\\{.*?\\}";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(formula);
+        while(m.find()){
+            lis.add("VARIABLE_NAME = '" + m.group().replaceAll("\\$|\\{|\\}", "").trim() + "'");
+        }
+        for(int i = 0; i < lis.size(); i++) {
+            if(i == (lis.size() - 1)) {
+                sql += lis.get(i);
+            }else{
+                sql += lis.get(i) + " or ";
+            }
+        }
+        return sql;
+    }
+
+    public static String replaceVariable(String formula,PageData pd){
+        String strRes = "";
+        String globalStr = "\\$\\{" + pd.get("VARIABLE_NAME").toString() + "\\}";
+        strRes = formula.replaceAll(globalStr, pd.get("VARIABLE_VALUE").toString());
+        return strRes;
     }
 }
