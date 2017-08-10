@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +139,7 @@ public class HttpService {
                 parameters.add(new BasicNameValuePair(name, value));
             }
             // 构造一个form表单式的实体
-            formEntity = new UrlEncodedFormEntity(parameters);
+            formEntity = new UrlEncodedFormEntity(parameters, "utf-8");
         }
 
         // 创建http GET请求
@@ -147,6 +148,8 @@ public class HttpService {
             httpPost = new HttpPost(url);
             // 将请求实体设置到httpPost对象中
             httpPost.setEntity(formEntity);
+            //设置请求的报文头部的编码
+            httpPost.setHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8"));
             // 伪装浏览器请求
             httpPost.setHeader(
                     "User-Agent",
