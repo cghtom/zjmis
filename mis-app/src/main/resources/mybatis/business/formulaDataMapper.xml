@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="formulaDataMapper">
+
+    <select id="getFormulaMsg" parameterType="pd" resultType="pd">
+        SELECT ID, CHECK_FORMULA, RPT_ID,CITY_ID, STATE FROM MIS_FORMULA_DEFINE WHERE 1 = 1
+        <if test="ID != NULL and ID != ''">
+            AND ID = #{ID}
+        </if>
+        ORDER BY ID DESC
+
+    </select>
+
+    <insert id="addFormulaMsg" parameterType="pd" useGeneratedKeys="false">
+        INSERT INTO MIS_FORMULA_DEFINE (ID, CHECK_FORMULA, RPT_ID,CITY_ID, STATE ,CREATE_TIME )
+        <foreach collection = "list" item = "item" index = "index" separator="UNION ALL">
+            SELECT
+            #{item.ID} ID,
+            #{item.CHECK_FORMULA} CHECK_FORMULA,
+            #{item.RPT_ID} RPT_ID,
+            #{item.CITY_ID} CITY_ID,
+            '1' STATE,
+            sysdate CREATE_TIME
+            FROM dual
+        </foreach>
+    </insert>
+
+    <update id="updFormulaMsg" parameterType="pd">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE MIS_FORMULA_DEFINE SET ${item.sql} WHERE ID = #{item.ID}
+        </foreach>
+    </update>
+
+    <select id="formulaMsgTotalCount" parameterType="pd" resultType="pd">
+        SELECT count(*) as COUNT FROM MIS_FORMULA_DEFINE WHERE 1 = 1
+        <if test="ID != NULL and ID != ''">
+            AND ID = #{ID}
+        </if>
+    </select>
+
+    <select id="getVariableValue" parameterType="pd" resultType="pd">
+        <foreach collection="list" item="item" index="index" separator=";">
+            SELECT VARIABLE_NAME,VARIABLE_VALUE FROM MIS_FORMULA_VARIABLE WHERE  1=1 AND  ${item.sql}
+        </foreach>
+    </select>
+
+
+
+</mapper>
