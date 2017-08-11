@@ -42,6 +42,9 @@
         <if test="ZB_ID != NULL and ZB_ID != ''">
             AND ZB_ID = #{ZB_ID}
         </if>
+        <if test="OP_TIME != NULL and OP_TIME != ''">
+            AND OP_TIME = #{OP_TIME}
+        </if>
     </select>
 
     <update id="updCheckMsg" parameterType="pd">
