@@ -5,9 +5,8 @@
     <title>指标数据查询</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="../admin/css/style.css" />
-    <link rel="stylesheet" href="../admin/css/index.css" />
-    <link rel="stylesheet" href="../plugins/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../plugins/css/bootstrap3.min.css" />
+    <link rel="stylesheet" href="../plugins/css/beyond.min.css" />
     <!-- <link rel="stylesheet" href="../plugins/css/dataTables.bootstrap.css" />-->
     <link href="../plugins/css/bootstrap-responsive.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../plugins/css/font-awesome.min.css" />
@@ -38,28 +37,60 @@
 </div>
 
 <div class="clearfix form-parent" id="formReportContent">
-    <form class="form-group result-form form-group-line2 clearfix result-qr-form">
-        <div class="form-line">
-            <label for="">数据周期：</label>
-            <input class="form-input checkDataQuery-form-input " id="data-cycle" type="text">
+    <form role="form">
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="label-table">报表名称：</label>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <span class="input-icon icon-right">
+                        <input class="form-control" id="report-form-name" type="text">
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <label for="" class="label-table">数据周期：</label>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <span class="input-icon icon-right">
+                        <input class="form-control " id="data-cycle" type="text">
+                    </span>
+                </div>
+            </div>
         </div>
-        <div class="form-line">
-            <label for="">报表名称：</label>
-            <input class="form-input checkDataQuery-form-input " id="report-form-name" type="text">
+        <div class="row">
+            <div class="col-sm-2">
+                <label for="" class="label-table">地市编码：</label>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <span class="input-icon icon-right">
+                        <input class="form-control" id="report-form-code" type="text">
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <label for="" class="label-table">指标编码：</label>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <span class="input-icon icon-right">
+                        <input class="form-control " id="report-form" type="text">
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="btn" id ='query-button'>
+                    <i class="icon-pencil"></i>
+                    <span>查询</span>
+                </div>
+            </div>
         </div>
-        <div class="form-line">
-            <label for="">报表编号：</label>
-            <input class="form-input checkDataQuery-form-input " id="report-form-code" type="text">
-        </div>
-        <div class="form-line">
-            <label for="">稽核状态：</label>
-            <div id="checkDataQuery-form-input"></div>
-        </div>
+
     </form>
-    <div class="btn" id ='query-button'>
-        <i class="icon-pencil"></i>
-        <span>查询</span>
-    </div>
+
 </div>
 
 <table id="table_report" class="table table-bordered table-striped table-hover">
