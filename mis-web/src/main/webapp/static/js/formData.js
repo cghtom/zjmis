@@ -63,6 +63,21 @@ seajs.use(['laytpl',
                     dataTab.fnDraw(false);
                  });
 
+                $('#formReportContent').on('click', '#batch-download', function(){
+                    var downloadParam = {};
+                    $.post(httpUrl + "&serviceName=MISDOWNLOADRPTMSG", downloadParam, function(data){
+                       /* var downloadDataModel;
+                        var rptMsgList = data.rptMsg;
+                        var downloadModelTpl = $("#downloadModelTpl").html().replace("lt;", "<");
+                        laytpl(downloadModelTpl).render(rptMsgList, function (html) {
+                            $('#form-horizontal').html(html);
+                        });
+                        $('#downloadModalLabel').text(downloadModelTitle);
+                        $('#commit').text('修改');
+                        $('#downloadModel').modal();*/
+                    });
+                });
+
 
                 $("#file-button").on("click",function () {
                     var checkboxArr = $("#table_report").find("td").find("input:checked");
