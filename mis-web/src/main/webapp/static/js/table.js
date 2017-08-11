@@ -11,9 +11,7 @@ seajs.use(['laytpl',
             },
             function(data) {
                 var tableConfig = eval('(' + data.TABLE_CONFIG + ')');
-                console.log(data)
                 var dataModel = eval('(' + data.MODEL + ')');
-                console.log(dataModel+"222");
                 var dataTab = $('#table_report').dataTable(tableConfig);
 
 
