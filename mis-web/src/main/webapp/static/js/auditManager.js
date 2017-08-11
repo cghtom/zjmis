@@ -76,6 +76,12 @@ seajs.use(['laytpl',
                     });
                 });
 
+                $("#test").on("click",function () {
+                    $.get(httpUrl + "&serviceName=MISRANGEFORMULA", "", function(data){
+
+                    })
+                })
+
 
 
 
@@ -89,6 +95,15 @@ seajs.use(['laytpl',
 
                 });
                 $('[data-rel=tooltip]').tooltip();
+
+
+
+
+
+
+
+
+
             }
         );
     });
