@@ -25,7 +25,7 @@
         <form role="form">
             <div class="row">
                 <div class="col-sm-2">
-                    <label for="" class="label-table">报表名称：</label>
+                    <label class="label-table">报表名称：</label>
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <label for="" class="label-table">报表编码：</label>
+                    <label class="label-table">报表编码：</label>
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -52,13 +52,30 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-1">
+                    <div class="btn" id ='batch-upload'>
+                        <i class="icon-pencil"></i>
+                        <span>批量上传</span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="btn" id ='batch-download'>
+                        <i class="icon-pencil"></i>
+                        <span>批量下载</span>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="btn" id ='file-button'>
+                        <i class="icon-pencil"></i>
+                        <span>数据归档确认</span>
+                    </div>
+                </div>
+            </div>
 
         </form>
 
-    <div class="btn" id ='file-button'>
-        <i class="icon-pencil"></i>
-        <span>归档</span>
-    </div>
 </div>
 
 <table id="table_report" class="table table-bordered table-striped table-hover">
@@ -97,6 +114,30 @@
             </div>
         </div><!-- /.modal-content -->
     </div>
+</div>
+
+<div class="modal fade" id="downloadModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="downloadModalLabel">
+
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="form-horizontal" id = "form-horizontal">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn btn-default" data-dismiss="modal">关闭</div>
+                <div class="btn btn-primary" id = 'commit'>提交</div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
 
 </div>
 
@@ -114,7 +155,34 @@
     </thead>
 </script>
 
-<script id="modelTpl" type="text/html">
+
+<script id="downloadModelTpl" type="text/html">
+    <div class="row">
+        <div class="col-sm-2">
+            <label><input type="checkbox" /><span class="lbl"></span></label>
+        </div>
+        <div class="col-sm-2">
+            <span >
+                报表编码
+            </span>
+        </div>
+    </div>
+
+    {{# for(var i = 0; i < d.length; i++) { }}
+    <div class="row">
+        <div class="col-sm-2">
+            <label><input type="checkbox" /><span class="lbl"></span></label>
+        </div>
+        <div class="col-sm-2">
+            <span >
+                {{d[i].RPT_ID}}
+            </span>
+        </div>
+    </div>
+    {{# }}}
+
+</script>
+<!--<script id="modelTpl" type="text/html">
     {{# for(var i = 0; i < d.length; i++) { }}
     <div class="control-group">
         <label class="control-label">{{d[i].cName}}</label>
@@ -135,7 +203,7 @@
         </div>
     </div>
     {{# }}}
-</script>
+</script>-->
 
 <script src="../plugins/js/jquery-3.2.1.min.js"></script>
 <script src="../plugins/js/bootstrap.min.js"></script>
@@ -149,6 +217,7 @@
     var httpUrlQuery = 'http://localhost:8080/misweb/dataJson?callBack=misData';
     /*var httpUploadUrl = 'http://localhost:8080/misweb/upload';*/
     var editModelTitle = '修改报表';
+    var downloadModelTitle = '下载报表';
     var modelTitle = "添加报表";
     var pageName = "RPT_RES_TAB";
     var fileServiceName = "MISFILERPTMSG"    /*报表归档*/
