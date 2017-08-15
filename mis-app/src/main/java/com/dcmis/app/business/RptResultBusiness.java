@@ -14,7 +14,6 @@ import java.util.Map;
  * Created by 黄福亮 on 2017/7/28.
  */
 public class RptResultBusiness {
-
     /**
      * 查询报表结果信息 MISGETRPTRESULT
      * @param pd
@@ -58,29 +57,52 @@ public class RptResultBusiness {
     }
 
     public PageData  exportExcel(PageData pd, String databaseId, DaoSupport daoSupport) throws  Exception{
-        List<PageData> pds = (List<PageData>)daoSupport.findForList("rptDataMapper.getRptResult",pd);
-        String rptID = "";
-        String rptName = "";
-        JSONArray ja = new JSONArray();
-        for(int i=0;i<pds.size();i++){
-            PageData rptMsg = pds.get(i);
-            rptID = rptMsg.getString("RPT_ID");
-            rptName = rptMsg.getString("RPT_NAME");
-            RptEntity entity = new RptEntity(rptID,rptName);
-            ja.add(entity);
+        /*pd.put("RPT_ID",pd.getString("RPT_ID").replaceAll(" ",""));*/
+        String[] rptArray = pd.getString("RPT_ID").split(",");
+        String[] opTimeArray = pd.getString("OP_TIME").split(",");
+        PageData finalPage = new PageData();
+        for(int i=0;i<rptArray.length;i++){
+            pd.put("RPT_ID",rptArray[i]);
+            pd.put("OP_TIME",opTimeArray[i]);
+            List<PageData> pds = (List<PageData>)daoSupport.findForList("rptDataMapper.getRptZbMsg",pd);
+            String rptID = "";
+            String opTime = "";
+            String  zbID = "";
+            String zbName = "";
+            String cityID = "";
+            String zbData1 = "";
+            String zbData2 = "";
+            JSONArray ja = new JSONArray();
+            for(int j=0;j<pds.size();j++){
+                PageData rptMsg = pds.get(j);
+                rptID = rptMsg.getString("RPT_ID");
+                opTime = rptMsg.getString("OP_TIME");
+                zbID = rptMsg.getString("ZB_ID");
+                zbName = rptMsg.getString("ZB_NAME");
+                cityID = rptMsg.getString("CITY_ID");
+                zbData1 = rptMsg.getString("ZB_DATA_1");
+                zbData2 = rptMsg.getString("ZB_DATA_2");
+                RptEntity entity = new RptEntity(rptID,opTime,zbID,zbName,cityID,zbData1,zbData2);
+                ja.add(entity);
+            }
+            Map<String,String> headMap = new LinkedHashMap<String,String>();
+            headMap.put("rptID","报表编码");
+            headMap.put("opTime","时间");
+            headMap.put("zbID","指标编码");
+            headMap.put("zbName","指标名称");
+            headMap.put("cityID","城市编码");
+            headMap.put("zbData1","原始指标值");
+            headMap.put("zbData2","更新指标值");
+            String title = "报表详情";
+            PageData returnPage = new PageData();
+            returnPage.put("BODYMSG",ja);
+            returnPage.put("HEADMSG",headMap);
+            returnPage.put("TITLE",title);
+            returnPage.put("FILENAME",rptArray[i]+"--"+opTimeArray[i]+".xlsx");
+            finalPage.put(i,returnPage);
         }
-        Map<String,String> headMap = new LinkedHashMap<String,String>();
-        headMap.put("rptID","指标编码");
-        headMap.put("rptName","只表名称");
-        String title = "测试";
-       /* String curFile = constant.getLocPath()+"test.xlsx";
-        OutputStream outXlsx = new FileOutputStream(curFile);
-        System.out.println("正在导出xlsx....");
-        ExportExcelUtil.exportExcelX(title,headMap,ja,null,0,outXlsx);
-        outXlsx.close();
-        String remoteFile = constant.getPath()+"test.xlsx";
-        ftpUtil.put(curFile, remoteFile);*/
-        return null;
+
+        return finalPage;
     }
 
 }
