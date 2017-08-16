@@ -63,18 +63,74 @@ seajs.use(['laytpl',
                     dataTab.fnDraw(false);
                  });
 
+                $("#downloadModel").on("click","#checkboxControl",function () {
+                    var that = this;
+                    $(this).closest('form').find('div > div > label:first-child input:checkbox')
+                        .each(function(){
+                            this.checked = that.checked;
+                            $(this).toggleClass('selected');
+                        });
+                });
+
+                $("#downloadModel").on("click","#commit",function () {
+                    var that = this;
+                    var param = "&RPT_ID=";
+                    var opTime = "&OP_TIME=";
+                    $('form div div input:checkbox').each(function () {
+                        if(this.checked==true){
+                            if($(this).attr("id")!="checkboxControl"){
+                                param += ($(this).parent().parent().siblings("div").children("span").html().replace(/(^\s*)|(\s*$)/g,"")+",");
+                                opTime += ($(this).parent().parent().siblings("div").children("input").val()+",");
+                            }
+                        }
+                    });
+                    param = param.substring(0,param.length-1);
+                    opTime = opTime.substring(0,opTime.length-1);
+                    window.location.href = httpUrlDownload + "&serviceName=MISDOWNLOADRPTMSG" + param+opTime;
+                });
+
+                /*$('#formReportContent').on("click","#batch-upload",function () {
+                    
+                });*/
+
+                $('#fileupload').fileupload({
+                    autoUpload: true,
+                    url:httpUploadUrl,
+                    formData:uploadParam,
+                    forceIframeTransport: true,
+                    done: function (data) {
+                        console.log(data)
+                    }}
+                );
+
+                //日期框添加默认值
+                function  setdate(){
+                    var sd=new Date();
+                    sd.setDate(sd.getDate()-1);
+                    var sy=sd.getFullYear();
+                    var sm = sd.getMonth()+1;
+                    if (sm >= 1 && sm <= 9) {
+                        sm = "0" + sm;
+                    }else {
+                        sm = ""+sm;
+                    }
+                    $(".Wdate").val(sy+sm);
+                }
+
                 $('#formReportContent').on('click', '#batch-download', function(){
                     var downloadParam = {};
-                    $.post(httpUrl + "&serviceName=MISDOWNLOADRPTMSG", downloadParam, function(data){
-                       /* var downloadDataModel;
+
+                    $.post(httpUrlQuery + "&serviceName=MISGETALLRPTMSG", downloadParam, function(data){
+                        var downloadDataModel;
                         var rptMsgList = data.rptMsg;
                         var downloadModelTpl = $("#downloadModelTpl").html().replace("lt;", "<");
                         laytpl(downloadModelTpl).render(rptMsgList, function (html) {
                             $('#form-horizontal').html(html);
                         });
                         $('#downloadModalLabel').text(downloadModelTitle);
-                        $('#commit').text('修改');
-                        $('#downloadModel').modal();*/
+                        $('#commit').text('下载');
+                        $('#downloadModel').modal();
+                        setdate();
                     });
                 });
 
