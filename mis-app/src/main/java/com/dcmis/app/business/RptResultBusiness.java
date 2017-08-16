@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.dcmis.app.dao.DaoSupport;
 import com.dcmis.app.entity.RptEntity;
 import com.dcmis.app.util.PageData;
+import com.dcmis.app.util.UploadExcelUtil;
 import com.github.pagehelper.PageHelper;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,8 +82,21 @@ public class RptResultBusiness {
                 zbID = rptMsg.getString("ZB_ID");
                 zbName = rptMsg.getString("ZB_NAME");
                 cityID = rptMsg.getString("CITY_ID");
-                zbData1 = rptMsg.getString("ZB_DATA_1");
-                zbData2 = rptMsg.getString("ZB_DATA_2");
+                Object zb_data_1 = rptMsg.get("ZB_DATA_1");
+                Object zb_data_2 = rptMsg.get("ZB_DATA_2");
+                if(zb_data_1==null){
+                    zbData1 = "";
+                }else{
+                    zbData1 = zb_data_1.toString();
+                }
+                if(zb_data_2==null){
+                    zbData2 = "";
+                }else{
+                    zbData2 = zb_data_2.toString();
+                }
+
+                /*zbData1 = rptMsg.getString("ZB_DATA_1");*/
+                /*zbData2 = rptMsg.getString("ZB_DATA_2");*/
                 RptEntity entity = new RptEntity(rptID,opTime,zbID,zbName,cityID,zbData1,zbData2);
                 ja.add(entity);
             }
@@ -97,12 +112,36 @@ public class RptResultBusiness {
             PageData returnPage = new PageData();
             returnPage.put("BODYMSG",ja);
             returnPage.put("HEADMSG",headMap);
-            returnPage.put("TITLE",title);
             returnPage.put("FILENAME",rptArray[i]+"--"+opTimeArray[i]+".xlsx");
             finalPage.put(i,returnPage);
         }
 
         return finalPage;
+    }
+
+    public void batchUpload(PageData pd, String databaseId, DaoSupport daoSupport)throws  Exception{
+        String localFile = pd.getString("DOWNLOADFILE");
+        List<String> colParams = new ArrayList<String>();
+        colParams.add("ZB_DATA_1");
+        colParams.add("ZB_DATA_2");
+        colParams.add("OP_TIME");
+        colParams.add("ZB_NAME");
+        colParams.add("CITY_ID");
+        colParams.add("RPT_ID");
+        colParams.add("ZB_ID");
+        List<PageData> list = UploadExcelUtil.excelType(localFile, colParams);
+        for (PageData li : list) {
+            String sql = " ZB_DATA = '" +li.getString("ZB_DATA_1")+ "'";
+            li.put("sql", sql);
+            List<PageData> rptIdList = new ArrayList<PageData>();
+            PageData pds = new PageData();
+            pds.put("sql", sql);
+            pds.put("ZB_ID", li.getString("ZB_ID"));
+            pds.put("OP_TIME", li.getString("OP_TIME"));
+            rptIdList.add(pds);
+            li.put("list", rptIdList);
+            daoSupport.update("rptDataMapper.updZbDataMsg", li);
+        }
     }
 
 }
