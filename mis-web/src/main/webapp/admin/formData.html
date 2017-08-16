@@ -53,11 +53,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-1">
+                <div class="col-sm-7"></div>
+                <div class="col-sm-2">
                     <div class="btn" id ='batch-upload'>
                         <i class="icon-pencil"></i>
                         <span>批量上传</span>
+                        <input  class="uploadInp" id="fileupload" name="files" type="file" multiple />
                     </div>
                 </div>
                 <div class="col-sm-1">
@@ -159,11 +160,16 @@
 <script id="downloadModelTpl" type="text/html">
     <div class="row">
         <div class="col-sm-2">
-            <label><input type="checkbox" /><span class="lbl"></span></label>
+            <label><input type="checkbox" id="checkboxControl" /><span class="lbl"></span></label>
         </div>
         <div class="col-sm-2">
             <span >
                 报表编码
+            </span>
+        </div>
+        <div class="col-sm-2">
+            <span >
+                时间
             </span>
         </div>
     </div>
@@ -178,35 +184,17 @@
                 {{d[i].RPT_ID}}
             </span>
         </div>
+        <div class="col-sm-2">
+            <input type="=text" class="Wdate" onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyyMM'})"/>
+        </div>
     </div>
     {{# }}}
 
 </script>
-<!--<script id="modelTpl" type="text/html">
-    {{# for(var i = 0; i < d.length; i++) { }}
-    <div class="control-group">
-        <label class="control-label">{{d[i].cName}}</label>
-        <div class="controls">
-            <input type="text" id="form-field" name = "{{d[i].name}}" placeholder="{{d[i].cName}}">
-        </div>
-    </div>
-    {{# }}}
-</script>
-
-
-<script id="editModelTpl" type="text/html">
-    {{# for(var i = 0; i < d.length; i++) { }}
-    <div class="control-group">
-        <label class="control-label">{{d[i].cName}}</label>
-        <div class="controls">
-            <input type="text" id="form-field-1" name = "{{d[i].name}}" placeholder="{{d[i].cName}}" value="{{d[i].value}}">
-        </div>
-    </div>
-    {{# }}}
-</script>-->
 
 <script src="../plugins/js/jquery-3.2.1.min.js"></script>
 <script src="../plugins/js/bootstrap.min.js"></script>
+<script src="../plugins/My97DatePicker/WdatePicker.js"></script>
 <script src="../plugins/js/jquery.dataTables.min.js"></script>
 <script src="../plugins/js/vendor/jquery.ui.widget.js"></script>
 <script src="../plugins/js/jquery.iframe-transport.js"></script>
@@ -214,16 +202,16 @@
 <script src="../plugins/js/sea.js"></script>
 <script>
     var httpUrl = 'http://localhost:8080/misweb/dataJson?callBack=misData';
+    var httpUrlDownload = 'http://localhost:8080/misweb/download?callBack=misData';
     var httpUrlQuery = 'http://localhost:8080/misweb/dataJson?callBack=misData';
-    /*var httpUploadUrl = 'http://localhost:8080/misweb/upload';*/
+    var httpUploadUrl = 'http://localhost:8080/misweb/upload?callBack=misData';
     var editModelTitle = '修改报表';
     var downloadModelTitle = '下载报表';
     var modelTitle = "添加报表";
     var pageName = "RPT_RES_TAB";
+    var uploadParam = {'serviceName' : 'MISBATCHUPLOADRPT'}; //上传服务
     var fileServiceName = "MISFILERPTMSG"    /*报表归档*/
-   /* var addServiceName = "MISADDRPTMSG";  *//** 添加报表*//*
-    var delServiceName = 'MISDELRPTMSG';  *//** 删除报表 *//*
-    var editServiceName = 'MISUPDRPTMSG'; *//** 修改报表 */
+
 </script>
 <script src="../static/js/formData.js"></script>
 
