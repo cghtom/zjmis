@@ -61,13 +61,9 @@
         <if test="ZB_ID != NULL and ZB_ID != ''">
             AND t1.ZB_ID = #{ZB_ID}
         </if>
-        <if test="ZB_NAME != NULL and ZB_NAME != ''">
-            AND t1.ZB_NAME = #{ZB_NAME}
+        <if test="CITY_ID != NULL and CITY_ID != ''">
+            AND t2.CITY_ID = #{CITY_ID}
         </if>
-        <if test="STATE != NULL and STATE != ''">
-            AND t1.STATE = #{STATE}
-        </if>
-
     </select>
 
     <select id="getRptZbMsgTotalCount"  parameterType="pd" resultType="pd">
@@ -81,11 +77,8 @@
         <if test="ZB_ID != NULL and ZB_ID != ''">
             AND t1.ZB_ID = #{ZB_ID}
         </if>
-        <if test="ZB_NAME != NULL and ZB_NAME != ''">
-            AND t1.ZB_NAME = #{ZB_NAME}
-        </if>
-        <if test="STATE != NULL and STATE != ''">
-            AND t1.STATE = #{STATE}
+        <if test="CITY_ID != NULL and CITY_ID != ''">
+            AND t2.CITY_ID = #{CITY_ID}
         </if>
     </select>
 
