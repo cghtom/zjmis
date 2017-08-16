@@ -7,13 +7,13 @@
 
     <link rel="stylesheet" href="../plugins/css/bootstrap3.min.css" />
     <link rel="stylesheet" href="../plugins/css/beyond.min.css" />
-    <!-- <link rel="stylesheet" href="../plugins/css/dataTables.bootstrap.css" />-->
     <link href="../plugins/css/bootstrap-responsive.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="../plugins/css/font-awesome.min.css" />
 
     <link rel="stylesheet" href="../plugins/css/ace.min.css" />
     <link rel="stylesheet" href="../plugins/css/ace-responsive.min.css" />
     <link rel="stylesheet" href="../plugins/css/ace-skins.min.css" />
+    <script src="../plugins/My97DatePicker/WdatePicker.js"></script>
     <link rel="stylesheet" href="../static/css/table.css" />
 
 </head>
@@ -40,44 +40,44 @@
     <form role="form">
         <div class="row">
             <div class="col-sm-2">
-                <label class="label-table">报表名称：</label>
+                <label class="label-table">报表编码：</label>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <span class="input-icon icon-right">
-                        <input class="form-control" id="report-form-name" type="text">
+                        <input class="form-control" id="rpt_id" type="text">
                     </span>
                 </div>
             </div>
             <div class="col-sm-2">
-                <label for="" class="label-table">数据周期：</label>
+                <label class="label-table">数据周期：</label>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <span class="input-icon icon-right">
-                        <input class="form-control " id="data-cycle" type="text">
+                        <input class="form-control Wdate"  onFocus="WdatePicker({lang:'zh-cn',dateFmt:'yyyyMM'})" id="op_time" type="text">
                     </span>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-2">
-                <label for="" class="label-table">地市编码：</label>
+                <label class="label-table">地市编码：</label>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <span class="input-icon icon-right">
-                        <input class="form-control" id="report-form-code" type="text">
+                        <input class="form-control" id="city_id" type="text">
                     </span>
                 </div>
             </div>
             <div class="col-sm-2">
-                <label for="" class="label-table">指标编码：</label>
+                <label class="label-table">指标编码：</label>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
                     <span class="input-icon icon-right">
-                        <input class="form-control " id="report-form" type="text">
+                        <input class="form-control " id="zb_id" type="text">
                     </span>
                 </div>
             </div>
@@ -101,7 +101,7 @@
 </table>
 
 
-<div class="modal fade" id="zbModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--<div class="modal fade" id="zbModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 100%">
         <div class="modal-content">
             <div class="modal-header">
@@ -120,10 +120,38 @@
                 <div class="btn btn-default" data-dismiss="modal">关闭</div>
                 <div class="btn btn-primary" id="zb-commit">修改</div>
             </div>
+        </div>&lt;!&ndash; /.modal-content &ndash;&gt;
+    </div>
+
+</div>-->
+
+
+
+<div class="modal fade" id="zbModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="modalLabel">
+                    指标修改
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id = "form-horizontal">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn btn-default" data-dismiss="modal">关闭</div>
+                <div class="btn btn-primary" id = 'zb-commit'>修改</div>
+            </div>
         </div><!-- /.modal-content -->
     </div>
 
 </div>
+
 
 <script id="headTpl" type="text/html">
     <thead>
@@ -144,23 +172,12 @@
     <div class="control-group">
         <label class="control-label">{{d[i].cName}}</label>
         <div class="controls">
-            <input type="text" id="form-field" name = "{{d[i].name}}" value="{{d[i].value}}" placeholder="{{d[i].cName}}">
+            <input type="text" id="form-field" class = "form-boot3" name = "{{d[i].name}}" value="{{d[i].value}}" placeholder="{{d[i].cName}}">
         </div>
     </div>
     {{# }}}
 </script>
 
-
-<script id="editModelTpl" type="text/html">
-    {{# for(var i = 0; i < d.length; i++) { }}
-    <div class="control-group">
-        <label class="control-label">{{d[i].cName}}</label>
-        <div class="controls">
-            <input type="text" id="form-field-1" name = "{{d[i].name}}" placeholder="{{d[i].cName}}" value="{{d[i].value}}">
-        </div>
-    </div>
-    {{# }}}
-</script>
 
 <script src="../plugins/js/jquery-3.2.1.min.js"></script>
 <script src="../plugins/js/bootstrap.min.js"></script>
@@ -193,7 +210,6 @@
         return args;
     }
 </script>
-<script src="../static/js/table.js"></script>
 <script src="../static/js/zbData.js"></script>
 
 </body>
