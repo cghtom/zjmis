@@ -171,12 +171,12 @@ public class ExportExcelUtil {
         SXSSFWorkbook workbook = new SXSSFWorkbook(1000);//缓存
         workbook.setCompressTempFiles(true);
         //表头样式
-        CellStyle titleStyle = workbook.createCellStyle();
+        /*CellStyle titleStyle = workbook.createCellStyle();
         titleStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
         Font titleFont = workbook.createFont();
         titleFont.setFontHeightInPoints((short) 20);
         titleFont.setBoldweight((short) 700);
-        titleStyle.setFont(titleFont);
+        titleStyle.setFont(titleFont);*/
         // 列头样式
         CellStyle headerStyle = workbook.createCellStyle();
         headerStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -200,6 +200,7 @@ public class ExportExcelUtil {
         cellFont.setBoldweight(HSSFFont.BOLDWEIGHT_NORMAL);
         cellStyle.setFont(cellFont);
         // 生成一个(带标题)表格
+
         SXSSFSheet sheet = workbook.createSheet();
         //设置列宽
         int minBytes = colWidth<DEFAULT_COLOUMN_WIDTH?DEFAULT_COLOUMN_WIDTH:colWidth;//至少字节数
@@ -226,19 +227,19 @@ public class ExportExcelUtil {
             if(rowIndex == 65535 || rowIndex == 0){
                 if ( rowIndex != 0 ) sheet = workbook.createSheet();//如果数据超过了，则在第二页显示
 
-                SXSSFRow titleRow = sheet.createRow(0);//表头 rowIndex=0
+                /*SXSSFRow titleRow = sheet.createRow(0);//表头 rowIndex=0
                 titleRow.createCell(0).setCellValue(title);
-                titleRow.getCell(0).setCellStyle(titleStyle);
-                sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, headMap.size() - 1));
+                titleRow.getCell(0).setCellStyle(titleStyle);*/
+                /*sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, headMap.size() - 1));*/
 
-                SXSSFRow headerRow = sheet.createRow(1); //列头 rowIndex =1
+                SXSSFRow headerRow = sheet.createRow(0); //列头 rowIndex =1
                 for(int i=0;i<headers.length;i++)
                 {
                     headerRow.createCell(i).setCellValue(headers[i]);
                     headerRow.getCell(i).setCellStyle(headerStyle);
 
                 }
-                rowIndex = 2;//数据内容从 rowIndex=2开始
+                rowIndex = 1;//数据内容从 rowIndex=2开始
             }
             JSONObject jo = (JSONObject) JSONObject.toJSON(obj);
             SXSSFRow dataRow = sheet.createRow(rowIndex);
