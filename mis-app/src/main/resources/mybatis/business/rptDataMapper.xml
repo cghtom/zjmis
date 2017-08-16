@@ -33,6 +33,12 @@
                 UPDATE mis_rpt_define SET ${item.sql} WHERE RPT_ID = #{item.RPT_ID}
             </foreach>
     </update>
+
+    <update id="updZbDataMsg" parameterType="pd">
+        <foreach collection="list" item="item" index="index" separator=";">
+            UPDATE MIS_RPT_JTZB_DATA SET ${item.sql} WHERE ZB_ID = #{item.ZB_ID} AND OP_TIME = #{item.OP_TIME}
+        </foreach>
+    </update>
     
     <select id="RptMsgTotalCount" parameterType="pd" resultType="pd">
         SELECT count(*) as COUNT FROM MIS_RPT_DEFINE WHERE 1 = 1
